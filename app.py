@@ -1,11 +1,13 @@
 from flask import Flask, request, render_template_string
 import joblib
 import pandas as pd
+import os 
 
 app = Flask(__name__)
 
 # Load the trained model
-model_path = "D:/AAA Semester 6/Innovation Practise Lab Project/machine_failure_model_updated.pkl"
+#model_path = "D:/AAA Semester 6/Innovation Practise Lab Project/machine_failure_model_updated.pkl"
+model_path = os.path.join(os.getcwd(), "models", "machine_failure_model_updated.pkl")
 modele = joblib.load(model_path)
 
 # HTML Form for User Input
@@ -169,5 +171,11 @@ def predict():
         return f"Error: {str(e)}"
 
 
+#if __name__ == '__main__':
+#   app.run(debug=True)
+
+
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 10000))  # Use Render's PORT or default 10000
+    app.run(host='0.0.0.0', port=port)      #Allows external access to your Flask app.
